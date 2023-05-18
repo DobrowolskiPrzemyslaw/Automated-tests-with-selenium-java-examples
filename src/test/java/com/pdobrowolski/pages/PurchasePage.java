@@ -37,15 +37,15 @@ public class PurchasePage  {
     public ShippingPage fillInContactForm (String email, String firstName, String lastName,
                                            String companyName, String address, String postalCode, String cityName,
                                            String phoneNumber, boolean saveCheckbox, String countryName){
-        emailField.sendText(email);
+        emailField.clearAndSendText(email);
         selectCountry.selectByVisibleText(countryName);
-        firstnameField.sendText(firstName);
-        lastnameField.sendText(lastName);
-        company.sendText(companyName);
-        addressField.sendText(address);
-        postalCodeField.sendText(postalCode);
-        cityField.sendText(cityName);
-        phoneNumberField.sendText(phoneNumber);
+        firstnameField.clearAndSendText(firstName);
+        lastnameField.clearAndSendText(lastName);
+        company.clearAndSendText(companyName);
+        addressField.clearAndSendText(address);
+        postalCodeField.clearAndSendText(postalCode);
+        cityField.clearAndSendText(cityName);
+        phoneNumberField.clearAndSendText(phoneNumber);
         saveMe.checkUncheckCheckbox(saveCheckbox);
         continueToShipping.click();
         return new ShippingPage();

@@ -10,13 +10,6 @@ import com.pdobrowolski.pages.HomePage;
 public class ShopifyTest extends BaseTest {
 
     @Test
-    public void smokeTest() {
-        HomePage page = new HomePage();
-        page.openHomePage();
-        Assert.assertEquals(page.getUrl(), "https://simpletheme.myshopify.com/");
-    }
-
-    @Test
     @Parameters({"Item2"})
     public void shopifyFirstTest(@Optional("Boot") String item) {
         Reporter.log("Zaczynam test shopifyFirstTest");

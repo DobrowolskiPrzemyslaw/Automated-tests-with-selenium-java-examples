@@ -34,24 +34,24 @@ public class PaymentPage {
 
     public PaymentPage fillInPaymentInformation (String cardNumber1, String cardNumber2, String cardNumber3, String cardNumber4, String nameCard, String expirationDate1, String expirationDate2, String securityCode)  {
         cardNumberFrame.switchToFrame();
-        cardNumberField.sendText2(cardNumber1);
-        cardNumberField.sendText2(cardNumber2);
-        cardNumberField.sendText2(cardNumber3);
-        cardNumberField.sendText2(cardNumber4);
+        cardNumberField.sendText(cardNumber1);
+        cardNumberField.sendText(cardNumber2);
+        cardNumberField.sendText(cardNumber3);
+        cardNumberField.sendText(cardNumber4);
         nameCardFrame.switchToFrame();
-        nameCardField.sendText(nameCard);
+        nameCardField.clearAndSendText(nameCard);
         expirationDateFrame.switchToFrame();
-        expirationDateField.sendText2(expirationDate1);
-        expirationDateField.sendText2(expirationDate2);
+        expirationDateField.sendText(expirationDate1);
+        expirationDateField.sendText(expirationDate2);
         securityCodeFrame.switchToFrame();
-        securityCodeField.sendText(securityCode);
+        securityCodeField.clearAndSendText(securityCode);
         securityCodeField.switchToDefaultBase();
         payButton.click();
         return this;
     }
 
     public String getErrorMessage(){
-        if(errorMassage.isVisble()){
+        if(errorMassage.isVisible()){
             return errorMassage.getTextNotice();
         }else {
             return null;

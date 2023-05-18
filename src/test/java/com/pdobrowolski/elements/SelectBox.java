@@ -8,7 +8,6 @@ public class SelectBox extends BaseElements{
         super(locator);
     }
 
-
     public void selectByVisibleText(String text){
         selectByVisibleTextBase(text);
     }

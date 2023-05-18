@@ -12,12 +12,17 @@ public class DriverFactory {
                 System.setProperty("webdriver.chrome.driver", "src/test/resources/webdrivers/chromedriver.exe");
             }
             driver = new ChromeDriver(OptionManager.getChromeOptions());
-        }
-        else {
+        } else if(browser.equalsIgnoreCase("firefox")) {
             if(System.getProperty("webdriver.gecko.driver") == null) {
                 System.setProperty("webdriver.gecko.driver", "src/test/resources/webdrivers/geckodriver.exe");
             }
             driver = new FirefoxDriver(OptionManager.getFirefoxOptions());
+        } else{
+            System.out.println("Do not know how to start " + browser + ", starting chrome instead");
+            if(System.getProperty("webdriver.chrome.driver") == null) {
+                System.setProperty("webdriver.chrome.driver", "src/test/resources/webdrivers/chromedriver.exe");
+            }
+            driver = new ChromeDriver(OptionManager.getChromeOptions());
         }
         return driver;
     }

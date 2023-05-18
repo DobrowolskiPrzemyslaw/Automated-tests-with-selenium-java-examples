@@ -19,29 +19,29 @@ public class BaseElements {
         this.locator = locator;
     }
 
-    protected WebElement waitUnilVisibeBase(){
+    protected WebElement waitUntilVisibleBase(){
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    protected WebElement waitUnilPresentedBase(){
+    protected WebElement waitUntilPresentedBase(){
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
-    protected void sendTextBase(String text){
-        waitUnilVisibeBase().clear();
-        waitUnilVisibeBase().sendKeys(text);
+    protected void clearAndSendTextBase(String text){
+        waitUntilVisibleBase().clear();
+        waitUntilVisibleBase().sendKeys(text);
     }
 
-    protected void sendTextBase2(String text){
-        waitUnilVisibeBase().sendKeys(text);
+    protected void sendTextBase(String text){
+        waitUntilVisibleBase().sendKeys(text);
     }
 
     protected void clickOnElementBase(){
-        waitUnilVisibeBase().click();
+        waitUntilVisibleBase().click();
     }
 
     protected Select getSelectBase(){
-        return new Select(waitUnilPresentedBase());
+        return new Select(waitUntilPresentedBase());
     }
 
     protected void selectByVisibleTextBase (String visibleText){
@@ -49,14 +49,14 @@ public class BaseElements {
     }
 
     protected boolean isSelectedBase (){
-        return waitUnilVisibeBase().isSelected();
+        return waitUntilVisibleBase().isSelected();
     }
 
     protected  void switchToFrameBase(){
-        driver.switchTo().frame(waitUnilPresentedBase());
+        driver.switchTo().frame(waitUntilPresentedBase());
     }
 
-    public void switchToDefaultBase(){
+    protected void switchToDefaultBase(){
         driver.switchTo().defaultContent();
     }
 }

@@ -14,8 +14,7 @@ public class OptionManager {
 
     public static FirefoxOptions getFirefoxOptions(){
         FirefoxOptions options = new FirefoxOptions();
-        options.addArguments("--remote-allow-origins=*");
-        options.addArguments("--disable-notifications");
+        options.setBinary("C:\\Program Files\\Mozilla Firefox\\firefox.exe");
         return options;
     }
 }

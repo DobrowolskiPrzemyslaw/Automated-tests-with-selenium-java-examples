@@ -8,13 +8,11 @@ public class InputTextBox extends BaseElements {
         super(locator);
     }
 
+    public void clearAndSendText(String text){
+        clearAndSendTextBase(text);
+    }
+
     public void sendText(String text){
         sendTextBase(text);
     }
-
-    public void sendText2(String text){
-        sendTextBase2(text);
-    }
-
-
 }

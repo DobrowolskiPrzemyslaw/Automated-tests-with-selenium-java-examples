@@ -17,15 +17,11 @@ public class HomePage extends BasePage {
     }
 
     public void openHomePage(){
-        openPageBase("https://simpletheme.myshopify.com/");
-    }
-
-    public String getUrl(){
-        return getUrlBase();
+        openPage("https://simpletheme.myshopify.com/");
     }
 
     public HomePage searchItem(String item){
-        searchField.sendText(item);
+        searchField.clearAndSendText(item);
         searchButton.click();
         return this;
     }

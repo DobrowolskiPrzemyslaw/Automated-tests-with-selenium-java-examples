@@ -9,11 +9,11 @@ public class Notice  extends BaseElements{
     }
 
     public String getTextNotice(){
-        return waitUnilPresentedBase().getText();
+        return waitUntilPresentedBase().getText();
     }
 
-    public boolean isVisble(){
-        return waitUnilVisibeBase().isDisplayed();
+    public boolean isVisible(){
+        return waitUntilVisibleBase().isDisplayed();
     }
 }
 

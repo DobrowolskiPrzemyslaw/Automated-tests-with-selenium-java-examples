@@ -13,32 +13,36 @@ public class BasePage {
     WebDriver driver = DriverManager.getDriver();
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
-    protected void openPageBase(String url){
+    protected void openPage(String url){
         driver.get(url);
     }
 
-    protected String getUrlBase(){
+    public String getUrl(){
         return driver.getCurrentUrl();
     }
 
-    protected WebElement waitUnilPresentedBase(By locator){
+    protected WebElement waitUntilPresentedBase(By locator){
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
-    protected WebElement waitUnilVisibeBase(By locator){
+    protected WebElement waitUntilVisibleBase(By locator){
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    protected void click(By locator){
-        waitUnilVisibeBase(locator).click();
+    protected WebElement waitUntilClickableBase(By locator){
+        return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
-    protected void clear(By locator){
-        waitUnilVisibeBase(locator).clear();
+    public void click(By locator){
+        waitUntilVisibleBase(locator).click();
     }
 
-    protected void sendText(By locator, String text){
+    public void clear(By locator){
+        waitUntilVisibleBase(locator).clear();
+    }
+
+    public void sendText(By locator, String text){
         clear(locator);
-        waitUnilVisibeBase(locator).sendKeys(text);
+        waitUntilVisibleBase(locator).sendKeys(text);
     }
 }

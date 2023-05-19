@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Zestaw testów Shopify E2E" verbose="1" parallel="tests" thread-count="3" >
+    <parameter name="browser" value="chrome"/>
+    <test name="Test E2E 1">
+        <classes>
+            <class name="com.pdobrowolski.tests.OpenPageTests">
+                <parameter name="url" value="https://simpletheme.myshopify.com/"/>
+                <methods>
+                    <include name="smokeTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Test E2E 2">
+        <classes>
+            <class name="com.pdobrowolski.tests.OpenPageTests">
+                <parameter name="browser" value="firefox"/>
+                <parameter name="url" value="https://simpletheme.myshopify.com/"/>
+                <methods>
+                    <include name="smokeTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Test E2E 3">
+        <classes>
+            <class name="com.pdobrowolski.tests.OpenPageTests">
+                <parameter name="url" value="https://simpletheme.myshopify.com/"/>
+                <methods>
+                    <include name="smokeTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
+
+<!--Chyba najlepszy sposob puszczania testow rownolegle to zrobienie 3 testow i w kazdym z nich odpalenie jednego testu.-->

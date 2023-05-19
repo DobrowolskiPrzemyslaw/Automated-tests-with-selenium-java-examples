@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Zestaw testów Shopify E2E" verbose="1" parallel="classes" thread-count="2" >
+    <parameter name="browser" value="chrome"/>
+    <test name="Test E2E 1">
+        <classes>
+            <class name="com.pdobrowolski.tests.OpenPageTests">
+                <parameter name="url" value="https://simpletheme.myshopify.com/"/>
+                <methods>
+                    <include name="smokeTest"/>
+                </methods>
+            </class>
+            <class name="com.pdobrowolski.tests.OpenPageTests">
+                <parameter name="url" value="https://simpletheme.myshopify.com/"/>
+                <methods>
+                    <include name="smokeTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
+
+<!--To działa bo kazda z klas oddzielnie rozszerza BaseTest i ma swoj driver-->
+<!--Musimy tu wskazac rozne klasy-->

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Zestaw testów Shopify E2E" parallel="methods" thread-count="2">
+    <parameter name="browserName" value="chrome"/>
+    <parameter name="env" value="https://simpletheme.myshopify.com/"/>
+    <test name="Test E2E 1">
+        <classes>
+            <class name="com.pdobrowolski.tests.ShopifyTest">
+               <parameter name="Item2" value="Goran Zip Boot - Rust"/>
+                <methods>
+                    <include name="shopifyRownolegle2"/>
+                    <include name="shopifyRownolegle"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Zestaw testów Shopify E2E" verbose="1" parallel="methods" thread-count="3" >
+    <parameter name="browser" value="chrome"/>
+    <test name="Test E2E 1">
+        <classes>
+            <class name="com.pdobrowolski.tests.OpenPageTests">
+                <parameter name="url" value="https://simpletheme.myshopify.com/"/>
+                <methods>
+                    <include name="smokeTest"/>
+                    <include name="smokeTest2"/>
+                    <include name="smokeTest3"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
+
+<!--To nie zadziała bo używamy jednego drivera-->

@@ -1,8 +1,13 @@
 package com.pdobrowolski.pages;
 
 import org.openqa.selenium.By;
+import org.slf4j.LoggerFactory;
 
 public class PaymentPage extends BasePage {
+
+    public PaymentPage(){
+        super(LoggerFactory.getLogger(PaymentPage.class));
+    }
 
     private final By cardNumberField = By.id("number");
     private final By nameCardField = By.id("name");
@@ -40,7 +45,7 @@ public class PaymentPage extends BasePage {
 
     public String getErrorMessage(){
         if(isVisible(errorMassage)){
-            return getTextNotice(errorMassage);
+            return getText(errorMassage);
         }else {
             return null;
         }

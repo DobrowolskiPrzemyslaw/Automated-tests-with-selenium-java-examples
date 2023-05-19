@@ -1,8 +1,13 @@
 package com.pdobrowolski.pages;
 
 import org.openqa.selenium.By;
+import org.slf4j.LoggerFactory;
 
 public class PurchasePage extends BasePage {
+
+    public PurchasePage(){
+        super(LoggerFactory.getLogger(PurchasePage.class));
+    }
 
     private final By emailField = By.xpath("//input[@id='email']");
     private final By firstnameField = By.xpath("//input[@id='TextField1']");

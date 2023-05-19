@@ -16,9 +16,9 @@ public class PurchasePage extends BasePage {
     private final By continueToShipping = By.xpath("//button[./span[text()='Continue to shipping']]");
     private final By saveMe = By.xpath("//input[@id='save_shipping_information']");
 
-    public ShippingPage fillInContactForm (String email, String firstName, String lastName,
-                                           String companyName, String address, String postalCode, String cityName,
-                                           String phoneNumber, boolean saveCheckbox, String countryName){
+    public ShippingPage fillInContactForm (String email, String firstName, String lastName, String companyName,
+                                           String address, String postalCode, String cityName, String phoneNumber,
+                                           boolean saveCheckbox, String countryName){
         clearAndSendText(emailField, email);
         selectByVisibleText(selectCountry, countryName);
         clearAndSendText(firstnameField, firstName);

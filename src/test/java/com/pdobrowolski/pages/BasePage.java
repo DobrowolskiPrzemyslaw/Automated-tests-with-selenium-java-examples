@@ -12,7 +12,7 @@ import java.time.Duration;
 public class BasePage {
 
     protected WebDriver driver = DriverManager.getDriver();
-    protected WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+    protected WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
     protected void openPage(String url){
         driver.get(url);

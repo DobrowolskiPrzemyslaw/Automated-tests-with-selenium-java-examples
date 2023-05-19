@@ -15,7 +15,8 @@ public class PaymentPage extends BasePage {
     private final By securityCodeFrame = By.xpath("//iframe[starts-with(@id, 'card-fields-verification_value-')]");
     private final By errorMassage = By.className("sdr03sa");
 
-    public PaymentPage fillInPaymentInformation (String cardNumber1, String cardNumber2, String cardNumber3, String cardNumber4, String nameCard, String expirationDate1, String expirationDate2, String securityCode)  {
+    public PaymentPage fillInPaymentInformation (String cardNumber1, String cardNumber2, String cardNumber3, String cardNumber4,
+                                                 String nameCard, String expirationDate1, String expirationDate2, String securityCode)  {
         switchToFrame(cardNumberFrame);
         sendText(cardNumberField, cardNumber1);
         sendText(cardNumberField, cardNumber2);

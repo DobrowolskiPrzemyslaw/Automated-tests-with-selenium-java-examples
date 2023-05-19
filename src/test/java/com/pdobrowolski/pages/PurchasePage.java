@@ -1,5 +1,6 @@
 package com.pdobrowolski.pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +22,7 @@ public class PurchasePage extends BasePage {
     private final By continueToShipping = By.xpath("//button[./span[text()='Continue to shipping']]");
     private final By saveMe = By.xpath("//input[@id='save_shipping_information']");
 
+    @Step("Filling in contact form")
     public ShippingPage fillInContactForm (String email, String firstName, String lastName,
                                            String companyName, String address, String postalCode, String cityName,
                                            String phoneNumber, boolean saveCheckbox, String countryName){

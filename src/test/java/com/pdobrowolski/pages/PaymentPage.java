@@ -22,11 +22,14 @@ public class PaymentPage extends BasePage {
         sendText(cardNumberField, cardNumber2);
         sendText(cardNumberField, cardNumber3);
         sendText(cardNumberField, cardNumber4);
+        switchToDefaultFrame();
         switchToFrame(nameCardFrame);
         clearAndSendText(nameCardField, nameCard);
+        switchToDefaultFrame();
         switchToFrame(expirationDateFrame);
         sendText(expirationDateField, expirationDate1);
         sendText(expirationDateField, expirationDate2);
+        switchToDefaultFrame();
         switchToFrame(securityCodeFrame);
         clearAndSendText(securityCodeField, securityCode);
         switchToDefaultFrame();

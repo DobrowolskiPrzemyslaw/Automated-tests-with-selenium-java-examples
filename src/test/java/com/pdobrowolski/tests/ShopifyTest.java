@@ -33,8 +33,7 @@ public class ShopifyTest extends BaseTest {
     }
 
     @Test
-    @Parameters({"Item2"})
-    public void shopifyRownolegle(String item){
+    public void shopifyRownolegle(@Optional() String item){
         Reporter.log("Zaczynam test shopifyFirstTest");
         String expectedText = "Your payment details couldn’t be verified. Check your card details and try again.";
         HomePage page = new HomePage();
@@ -55,7 +54,6 @@ public class ShopifyTest extends BaseTest {
     }
 
     @Test
-    @Parameters({"Item2"})
     public void shopifyRownolegle2(String item) {
         Reporter.log("Zaczynam test shopifyFirstTest");
         String expectedText = "Your payment details couldn’t be verified. Check your card details and try again.";
@@ -77,7 +75,6 @@ public class ShopifyTest extends BaseTest {
     }
 
     @Test
-    @Parameters({"Item"})
     public void shopifyFirstTest2(String item) {
         Reporter.log("Zaczynam test shopifyFirstTest2");
         Reporter.log("Tworze HomePage");

@@ -6,7 +6,7 @@ import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-public class SmokeTest extends BaseTest {
+public class OpenPageTests extends BaseTest {
 
     @Test(groups = {"positiveTests", "smokeTests" })
     @Parameters({"url"})
@@ -16,12 +16,12 @@ public class SmokeTest extends BaseTest {
         Assert.assertEquals(page.getUrl(), url);
     }
 
-    @Test(groups = {"negativeTests", "smokeTests" })
+    @Test(groups = {"positiveTests", "smokeTests" })
     @Parameters({"url"})
-    public void smokeTest2() {
+    public void smokeTest2(@Optional("https://simpletheme.myshopify.com/") String url) {
         HomePage page = new HomePage();
         page.openHomePage();
-        Assert.assertNotEquals(page.getUrl(), "url");
+        Assert.assertEquals(page.getUrl(), url);
     }
 
     @Test(groups = {"positiveTests", "smokeTests" })

@@ -8,10 +8,10 @@ public class PurchasePage extends BasePage {
     private final By firstnameField = By.xpath("//input[@id='TextField1']");
     private final By lastnameField = By.xpath("//input[@id='TextField2']");
     private final By company = By.xpath("//input[@id='TextField3']");
-    private final By addressField = By.xpath("//input[@id='TextField8']");
-    private final By postalCodeField = By.xpath("//input[@id='TextField9']");
-    private final By cityField = By.xpath("//input[@id='TextField10']");
-    private final By phoneNumberField = By.xpath("//input[@id='phone_field']");
+    private final By addressField = By.xpath("//input[@placeholder='Address']");
+    private final By postalCodeField = By.xpath("//input[@placeholder='Postal code']");
+    private final By cityField = By.xpath("//input[@placeholder='City']");
+    private final By phoneNumberField = By.xpath("//input[@placeholder='Phone (optional)']");
     private final By selectCountry = By.xpath("//select[@id='Select0']");
     private final By continueToShipping = By.xpath("//button[./span[text()='Continue to shipping']]");
     private final By saveMe = By.xpath("//input[@id='save_shipping_information']");

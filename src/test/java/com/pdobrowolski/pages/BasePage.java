@@ -30,6 +30,10 @@ public class BasePage {
         return driver.getCurrentUrl();
     }
 
+    public String getTitle(){
+        return driver.getTitle();
+    }
+
     protected WebElement waitUntilPresentedBase(By locator){
         logger.info("Waiting until presented: "+ locator.toString());
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));

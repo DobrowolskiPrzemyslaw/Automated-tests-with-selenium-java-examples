@@ -1,53 +1,35 @@
 package com.pdobrowolski.pages;
 
-import com.pdobrowolski.elements.Button;
-import com.pdobrowolski.elements.InputCheckbox;
-import com.pdobrowolski.elements.InputTextBox;
-import com.pdobrowolski.elements.SelectBox;
 import org.openqa.selenium.By;
 
-public class PurchasePage  {
+public class PurchasePage extends BasePage {
 
-    InputTextBox emailField;
-    InputTextBox firstnameField;
-    InputTextBox lastnameField;
-    InputTextBox company;
-    InputTextBox addressField;
-    InputTextBox postalCodeField;
-    InputTextBox cityField;
-    InputTextBox phoneNumberField;
-    SelectBox selectCountry;
-    Button continueToShipping;
-    InputCheckbox saveMe;
+    private final By emailField = By.xpath("//input[@id='email']");
+    private final By firstnameField = By.xpath("//input[@id='TextField1']");
+    private final By lastnameField = By.xpath("//input[@id='TextField2']");
+    private final By company = By.xpath("//input[@id='TextField3']");
+    private final By addressField = By.xpath("//input[@id='TextField8']");
+    private final By postalCodeField = By.xpath("//input[@id='TextField9']");
+    private final By cityField = By.xpath("//input[@id='TextField10']");
+    private final By phoneNumberField = By.xpath("//input[@id='phone_field']");
+    private final By selectCountry = By.xpath("//select[@id='Select0']");
+    private final By continueToShipping = By.xpath("//button[./span[text()='Continue to shipping']]");
+    private final By saveMe = By.xpath("//input[@id='save_shipping_information']");
 
-    public PurchasePage(){
-        emailField = new InputTextBox(By.xpath("//input[@id='email']"));
-        firstnameField = new InputTextBox(By.xpath("//input[@id='TextField1']"));
-        lastnameField = new InputTextBox(By.xpath("//input[@id='TextField2']"));
-        company = new InputTextBox(By.xpath("//input[@id='TextField3']"));
-        addressField = new InputTextBox(By.xpath("//input[@id='TextField8']"));
-        postalCodeField = new InputTextBox(By.xpath("//input[@id='TextField9']"));
-        cityField = new InputTextBox(By.xpath("//input[@id='TextField10']"));
-        phoneNumberField = new InputTextBox(By.xpath("//input[@id='phone_field']"));
-        selectCountry = new SelectBox(By.xpath("//select[@id='Select0']"));
-        saveMe = new InputCheckbox(By.xpath("//input[@id='save_shipping_information']"));
-        continueToShipping = new Button(By.xpath("//button[./span[text()='Continue to shipping']]"));
-
-    }
     public ShippingPage fillInContactForm (String email, String firstName, String lastName,
                                            String companyName, String address, String postalCode, String cityName,
                                            String phoneNumber, boolean saveCheckbox, String countryName){
-        emailField.clearAndSendText(email);
-        selectCountry.selectByVisibleText(countryName);
-        firstnameField.clearAndSendText(firstName);
-        lastnameField.clearAndSendText(lastName);
-        company.clearAndSendText(companyName);
-        addressField.clearAndSendText(address);
-        postalCodeField.clearAndSendText(postalCode);
-        cityField.clearAndSendText(cityName);
-        phoneNumberField.clearAndSendText(phoneNumber);
-        saveMe.checkUncheckCheckbox(saveCheckbox);
-        continueToShipping.click();
+        clearAndSendText(emailField, email);
+        selectByVisibleText(selectCountry, countryName);
+        clearAndSendText(firstnameField, firstName);
+        clearAndSendText(lastnameField, lastName);
+        clearAndSendText(company, companyName);
+        clearAndSendText(addressField, address);
+        clearAndSendText(postalCodeField, postalCode);
+        clearAndSendText(cityField, cityName);
+        clearAndSendText(phoneNumberField, phoneNumber);
+        checkUncheckCheckbox(saveMe, saveCheckbox);
+        click(continueToShipping);
         return new ShippingPage();
     }
 }

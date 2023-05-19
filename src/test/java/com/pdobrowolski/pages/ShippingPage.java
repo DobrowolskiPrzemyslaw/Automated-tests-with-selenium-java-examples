@@ -1,18 +1,13 @@
 package com.pdobrowolski.pages;
 
-import com.pdobrowolski.elements.Button;
 import org.openqa.selenium.By;
 
-public class ShippingPage {
+public class ShippingPage extends BasePage{
 
-    Button continueToPayment;
-
-    public ShippingPage(){
-        continueToPayment = new Button(By.xpath("//button[./span[text()='Continue to payment']]"));
-    }
+    private final By continueToPayment = By.xpath("//button[./span[text()='Continue to payment']]");
 
     public PaymentPage shipping (){
-        continueToPayment.click();
+        click(continueToPayment);
         return new PaymentPage();
     }
 }

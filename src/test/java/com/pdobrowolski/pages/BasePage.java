@@ -5,13 +5,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 
 public class BasePage {
-    WebDriver driver = DriverManager.getDriver();
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+
+    protected WebDriver driver = DriverManager.getDriver();
+    protected WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
     protected void openPage(String url){
         driver.get(url);
@@ -29,20 +30,58 @@ public class BasePage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    protected WebElement waitUntilClickableBase(By locator){
-        return wait.until(ExpectedConditions.elementToBeClickable(locator));
-    }
-
-    public void click(By locator){
+    protected void click(By locator){
         waitUntilVisibleBase(locator).click();
     }
 
-    public void clear(By locator){
+    protected void clear(By locator){
         waitUntilVisibleBase(locator).clear();
     }
 
-    public void sendText(By locator, String text){
+    protected void clearAndSendText(By locator, String text){
         clear(locator);
         waitUntilVisibleBase(locator).sendKeys(text);
+    }
+
+    protected void sendText(By locator, String text){
+        waitUntilVisibleBase(locator).sendKeys(text);
+    }
+
+    protected boolean isVisible(By locator){
+        return waitUntilVisibleBase(locator).isDisplayed();
+    }
+
+    protected String getTextNotice(By locator){
+        return waitUntilPresentedBase(locator).getText();
+    }
+
+    protected  void switchToFrame(By locator){
+        driver.switchTo().frame(waitUntilPresentedBase(locator));
+    }
+
+    protected void switchToDefaultFrame(){
+        driver.switchTo().defaultContent();
+    }
+
+    protected Select getSelect(By locator){
+        return new Select(waitUntilPresentedBase(locator));
+    }
+
+    protected void selectByVisibleText(By locator, String visibleText){
+        getSelect(locator).selectByVisibleText(visibleText);
+    }
+
+    protected boolean isSelected (By locator){
+        return waitUntilVisibleBase(locator).isSelected();
+    }
+
+    protected void checkUncheckCheckbox(By locator, boolean check) {
+        if (check) {
+            if (!isSelected(locator))
+                click(locator);
+        } else {
+            if (isSelected(locator))
+                click(locator);
+        }
     }
 }

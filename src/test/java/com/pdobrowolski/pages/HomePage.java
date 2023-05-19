@@ -1,33 +1,25 @@
 package com.pdobrowolski.pages;
 
-import com.pdobrowolski.elements.Button;
-import com.pdobrowolski.elements.InputTextBox;
-import com.pdobrowolski.elements.Link;
 import org.openqa.selenium.By;
 
 public class HomePage extends BasePage {
-    InputTextBox searchField;
-    Button searchButton;
-    Link productDetialLink;
 
-    public HomePage(){
-        searchField = new InputTextBox(By.className("search-bar__input"));
-        searchButton = new Button(By.className("search-bar__submit"));
-        productDetialLink = new Link(By.xpath("//a[@title='Goran Zip Boot - Rust']"));
-    }
+    private final By searchField = By.className("search-bar__input");
+    private final By searchButton = By.className("search-bar__submit");
+    private final By productDetailLink = By.xpath("//a[@title='Goran Zip Boot - Rust']");
 
     public void openHomePage(){
         openPage("https://simpletheme.myshopify.com/");
     }
 
     public HomePage searchItem(String item){
-        searchField.clearAndSendText(item);
-        searchButton.click();
+        sendText(searchField, item);
+        click(searchButton);
         return this;
     }
 
     public ProductDetails clickOnItemLink() {
-        productDetialLink.click();
+        click(productDetailLink);
         return new ProductDetails();
     }
 }

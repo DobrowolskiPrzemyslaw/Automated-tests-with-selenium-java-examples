@@ -1,12 +1,15 @@
 package com.pdobrowolski.tests;
 
+import com.pdobrowolski.utils.Listener;
 import org.testng.Assert;
 import org.testng.Reporter;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import com.pdobrowolski.pages.HomePage;
 
+@Listeners(value = {Listener.class})
 public class ShopifyTest extends BaseTest {
 
     @Test

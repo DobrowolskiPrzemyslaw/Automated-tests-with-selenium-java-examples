@@ -1,11 +1,14 @@
 package com.pdobrowolski.tests;
 
 import com.pdobrowolski.pages.HomePage;
+import com.pdobrowolski.utils.Listener;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+@Listeners(value = {Listener.class})
 public class OpenPageTests extends BaseTest {
 
     @Test(groups = {"positiveTests", "smokeTests" })

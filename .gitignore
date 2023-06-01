@@ -1,4 +1,4 @@
 /.idea/
-/TestSuites/
 /src/test/resources/data/
 /target/
+/.allure/

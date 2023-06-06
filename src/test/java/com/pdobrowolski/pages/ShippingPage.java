@@ -4,7 +4,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.slf4j.LoggerFactory;
 
-public class ShippingPage extends BasePage{
+public class ShippingPage extends BasePage {
 
     public ShippingPage(){
         super(LoggerFactory.getLogger(ShippingPage.class));

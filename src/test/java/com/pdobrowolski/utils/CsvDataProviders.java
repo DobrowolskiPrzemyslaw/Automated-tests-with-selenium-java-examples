@@ -1,6 +1,7 @@
 package com.pdobrowolski.utils;
 
 import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import org.testng.annotations.DataProvider;
 
 import java.io.File;
@@ -38,6 +39,8 @@ public class CsvDataProviders {
 			throw new RuntimeException("File " + pathname + " was not found.\n" + Arrays.toString(e.getStackTrace()));
 		} catch (IOException e) {
 			throw new RuntimeException("Could not read " + pathname + " file.\n" + Arrays.toString(e.getStackTrace()));
+		} catch (CsvValidationException e) {
+			throw new RuntimeException(e);
 		}
 		return list.iterator();
 	}

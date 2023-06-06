@@ -12,10 +12,11 @@ public class BaseTest {
 
     protected WebDriver driver;
 
+
     @BeforeMethod(alwaysRun = true)
     @Parameters({"browser", "chromeProfile", "deviceName", "headless"})
     protected void setUp(@Optional("firefox") String browser, @Optional String profile, @Optional String deviceName
-            , @Optional("true") String headless) {
+            , @Optional("true1") String headless) {
         DriverManager.createInstance(browser,profile,deviceName,headless);
         driver = DriverManager.getDriver();
         driver.manage().window().setPosition(new Point(-1000,200));

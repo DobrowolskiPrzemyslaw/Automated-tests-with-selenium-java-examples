@@ -13,9 +13,19 @@ public class HomePage extends BasePage {
     private final By searchField = By.className("search-bar__input");
     private final By searchButton = By.className("search-bar__submit");
     private final By productDetailLink = By.xpath("//a[@title='Goran Zip Boot - Rust']");
+    private final By homeButton = By.xpath("//a[text()='Home']");
 
     public void openHomePage(){
-        openPage("https://simpletheme.myshopify.com/");
+//        openPage("https://simpletheme.myshopify.com/");
+        openPage("https://www.ergo.com/pl-PL/Microsites/ETS/Start/Contact");
+    }
+
+    public void clickHomeButton(){
+        click(homeButton);
+    }
+
+    public void checkEvent(String firstPart, String secondPart) {
+        checkEventBase(driver, firstPart, secondPart);
     }
 
     @Step("Searching item")

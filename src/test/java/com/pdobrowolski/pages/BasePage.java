@@ -2,22 +2,26 @@ package com.pdobrowolski.pages;
 
 import com.pdobrowolski.driver.DriverManager;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
+import org.testng.Assert;
 
 import java.time.Duration;
-
 public class BasePage {
+
+    protected BasePage() {
+    }
 
     protected BasePage(Logger logger) {
         BasePage.logger = logger;
     }
 
-    private static Logger logger;
+    protected static Logger logger;
     protected WebDriver driver = DriverManager.getDriver();
     protected WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
@@ -108,4 +112,19 @@ public class BasePage {
         }
     }
 
+    public int countOfEventsBase(WebDriver driver, String eventName) {
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        Long eventCount = (Long) jsExecutor.executeScript("return window.appEventData.filter(item => item.event === arguments[0]).length;", eventName);
+        return eventCount.intValue();
+    }
+
+    public static void checkEventBase(WebDriver driver, String firstPart, String secondPart) {
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        Boolean eventFound = (Boolean) jsExecutor.executeScript(
+                "const appEventData = window.appEventData;\n" +
+                        "return appEventData.some(item => " +
+                        "item.eventdetails.clickedElement.startsWith(arguments[0]) && " +
+                        "item.eventdetails.clickedElement.endsWith(arguments[1]));", firstPart, secondPart);
+        Assert.assertTrue(eventFound, "Event not found.");
+    }
 }

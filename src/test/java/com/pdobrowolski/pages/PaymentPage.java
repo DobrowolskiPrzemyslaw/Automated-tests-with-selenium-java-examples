@@ -39,7 +39,7 @@ public class PaymentPage extends BasePage {
 
     public String getErrorMessage(){
         if(isVisible(errorMassage)){
-            return getTextNotice(errorMassage);
+            return getText(errorMassage);
         }else {
             return null;
         }

@@ -20,43 +20,35 @@ public class BaseForWiola {
     }
 
     @Test
-    protected void tearDown2() {
-        System.out.print("Wprowadź dane do zapisania: ");
-        String dane = "Dane";
+    protected void createDataBase_test() {
 
-        try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:baza_danych.db");
+        String pathToDataBase = "C:/Users/User/Documents/";
+        String nameDataBase = "wiola";
+        String data_zEkranuDanych_kolumna_1 = "Ekran danych";
+        String data_zEkranuDanych_kolumna_2 = "Ekran danych";
+        String data_zEkranuDanych_kolumna_3 = "Ekran danych";
+        String data_zEkranuWynikow = "Ekran wynikow";
+        String tabelaDany_zEkranuDanych = "TABELA_EKRAN_DANYCH";
+        String tabelaDany_zEkranuWynikow = "TABELA_EKRAN_WYNIKOW";
+        String kolumna_1 = "kolumna_1";
+        String kolumna_2 = "kolumna_2";
+        String kolumna_3 = "kolumna_3";
 
-            // Zapisywanie danych
-            String insertQuery = "INSERT INTO dane (dane) VALUES (?)";
-            PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
-            insertStatement.setString(1, dane);
-            insertStatement.executeUpdate();
-            insertStatement.close();
-
-            // Odczytywanie danych
-            String selectQuery = "SELECT * FROM dane";
-            PreparedStatement selectStatement = connection.prepareStatement(selectQuery);
-            ResultSet resultSet = selectStatement.executeQuery();
-
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String daneZBazy = resultSet.getString("dane");
-                System.out.println("ID: " + id + ", Dane: " + daneZBazy);
-            }
-
-            resultSet.close();
-            selectStatement.close();
-
-            connection.close();
-        } catch (SQLException e) {
-            System.out.println("Wystąpił błąd podczas operacji na bazie danych.");
-            e.printStackTrace();
+        if(!czyIstniejPlikBazyDanych(pathToDataBase, nameDataBase)){
+            stworzPlikBazyDanych(pathToDataBase, nameDataBase);
         }
+
+        stworzTableZKolumnami(pathToDataBase, nameDataBase, tabelaDany_zEkranuDanych, kolumna_1, kolumna_2, kolumna_3);
+//        stworzTableZKolumnami(pathToDataBase, nameDataBase, tabelaDany_zEkranuWynikow, kolumna_1, kolumna_2, kolumna_3);
+
+//        zapiszDaneDoBazyDanych(pathToDataBase, nameDataBase, tabelaDany_zEkranuDanych, kolumna_1, data_zEkranuDanych_kolumna_1);
+//        zapiszDaneDoBazyDanych(pathToDataBase, nameDataBase, tabelaDany_zEkranuDanych, kolumna_2, data_zEkranuDanych_kolumna_2);
+//        zapiszDaneDoBazyDanych(pathToDataBase, nameDataBase, tabelaDany_zEkranuDanych, kolumna_3, data_zEkranuDanych_kolumna_3);
+        czytajDaneKolumnyzBazyDanych(pathToDataBase, nameDataBase, tabelaDany_zEkranuDanych, kolumna_1);
     }
 
-    private void createDataBase(String path, String name) {
-        String url = "jdbc:sqlite:/+"+path+"/"+name+".db";
+    private void stworzPlikBazyDanych(String path, String name) {
+        String url = "jdbc:sqlite:"+path+name+".db";
         try {
             Connection connection = DriverManager.getConnection(url);
             System.out.println("Plik bazy danych został utworzony.");
@@ -67,8 +59,8 @@ public class BaseForWiola {
         }
     }
 
-    public boolean checkSQLiteFile (String path, String name) {
-        String sciezkaDoPliku = path+"/"+name+".db";
+    public boolean czyIstniejPlikBazyDanych (String path, String name) {
+        String sciezkaDoPliku = path+name+".db";
         boolean checkSQLiteFile = false;
         File plik = new File(sciezkaDoPliku);
         if (plik.exists()) {
@@ -80,34 +72,39 @@ public class BaseForWiola {
         return checkSQLiteFile;
     }
 
-    public static void saveDataToDatabase(String pathToDatabase, String data) {
-        String url = "jdbc:sqlite:"+pathToDatabase;
+    public static void stworzTableZKolumnami(String path, String name, String tableName,
+                                             String kolumna_1, String kolumna_2, String kolumna_3) {
+        String url = "jdbc:sqlite:"+path+name+".db";
 
         try {
             Connection connection = DriverManager.getConnection(url);
+            Statement statement = connection.createStatement();
 
-            String insertQuery = "INSERT INTO table_name (column_name) VALUES (?)";
-            PreparedStatement statement = connection.prepareStatement(insertQuery);
-            statement.setString(1, data);
-            statement.executeUpdate();
+            String createTableQuery = "CREATE TABLE IF NOT EXISTS "+tableName+" ("
+                    + kolumna_1 +" TEXT,"
+                    + kolumna_2 +" TEXT,"
+                    + kolumna_3 +" TEXT"
+                    + ")";
+            statement.executeUpdate(createTableQuery);
 
             statement.close();
             connection.close();
 
-            System.out.println("Data saved to the SQLite database.");
+            System.out.println("Table created in the SQLite database.");
         } catch (SQLException e) {
-            System.out.println("Error saving data to the SQLite database.");
+            System.out.println("Error creating table in the SQLite database.");
             e.printStackTrace();
         }
     }
 
-    public static void readDataFromDatabase (String pathToDatabase, String tableName, String columnName) {
-        String url = "jdbc:sqlite:"+pathToDatabase;
+
+    public static void czytajDaneKolumnyzBazyDanych (String path, String name, String tableName, String columnName) {
+        String url = "jdbc:sqlite:"+path+name+".db";
 
         try {
             Connection connection = DriverManager.getConnection(url);
 
-            String selectQuery = "SELECT * FROM "+ tableName;
+            String selectQuery = "SELECT "+columnName+" FROM "+ tableName;
             PreparedStatement statement = connection.prepareStatement(selectQuery);
             ResultSet resultSet = statement.executeQuery();
 
@@ -126,6 +123,20 @@ public class BaseForWiola {
             e.printStackTrace();
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public static void readDataByIdFromDatabase(String pathToDatabase, String tableName,int id, String columnName) {
         String url = "jdbc:sqlite:"+pathToDatabase;

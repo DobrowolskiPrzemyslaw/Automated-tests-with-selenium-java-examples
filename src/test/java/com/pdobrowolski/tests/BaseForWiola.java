@@ -13,14 +13,13 @@ public class BaseForWiola {
         int count = 0;
         while (true) {
             robot.mouseMove(0, 0);
-            Thread.sleep(60000);
+            Thread.sleep(600000);
             System.out.println(count++);
         }
     }
 
     @Test
     protected void createDataBase_test() {
-
         String path = "C:/Users/User/Documents/WIOLA.db";
         String tableName = "TABELA_DATA_SCREEN";
         String columnName = "column_1";
@@ -32,19 +31,17 @@ public class BaseForWiola {
         clearTable(path, tableName);
         setValueToColumn(path, tableName, columnName, value);
         getValueFromColumn(path, tableName, columnName);
-
         deleteSQLiteDatabase(path);
     }
 
     @Test
     protected void createDataBase_test2() {
-
         String path = "C:/Users/User/Documents/WIOLA2.db";
         String tableName = "TABELA_DATA_SCREEN";
-        String columnName1 = "column_1";
-        String columnName2 = "column_2";
-        String value1 = "Data screen - value1";
-        String value2 = "Data screen - value2";
+        String columnName1 = "NAZWA RECEPTURY";
+        String columnName2 = "NAZWA SKLADNIKA";
+        String value1 = "Receptura1";
+        String value2 = "Skladni1";
         if (!czyIstniejPlikBazyDanych(path)) {
             stworzPlikBazyDanych(path);
             createTableWithColumns(path, tableName, columnName1, columnName2);
@@ -52,7 +49,6 @@ public class BaseForWiola {
         clearTable(path, tableName);
         setValueToColumns(path, tableName, columnName1, columnName2, value1, value2);
         getValueFromColumns(path, tableName, columnName1, columnName2);
-
         deleteSQLiteDatabase(path);
     }
 
@@ -118,13 +114,7 @@ public class BaseForWiola {
     }
 
     public void setValueToColumn(String path, String tableName, String columnName, String value1) {
-        String url = "jdbc:sqlite:" + path;
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        Connection conn = connectDatabase(path);
         String insertQuery = "INSERT INTO "+tableName+" ("+ columnName +") VALUES (?)";
         try {
             PreparedStatement pstmt = conn.prepareStatement(insertQuery);
@@ -134,23 +124,12 @@ public class BaseForWiola {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
+            closeConnection(conn);
         }
     }
 
     public void setValueToColumns(String path, String tableName, String columnName1, String columnName2, String value1, String value2) {
-        String url = "jdbc:sqlite:" + path;
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        Connection conn = connectDatabase(path);
         String insertQuery = "INSERT INTO "+tableName+" ("+ columnName1 +","+ columnName2+") VALUES (?,?)";
         try {
             PreparedStatement pstmt = conn.prepareStatement(insertQuery);
@@ -161,23 +140,12 @@ public class BaseForWiola {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
+            closeConnection(conn);
         }
     }
 
     public void getValueFromColumn(String path, String tableName, String columnName) {
-        String url = "jdbc:sqlite:" + path;
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        Connection conn = connectDatabase(path);
         String selectQuery = "SELECT " + columnName + " FROM " + tableName;
         try {
             Statement stmt = conn.createStatement();
@@ -189,23 +157,12 @@ public class BaseForWiola {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
+            closeConnection(conn);
         }
     }
 
     public void getValueFromColumns(String path, String tableName, String columnName1, String columnName2) {
-        String url = "jdbc:sqlite:" + path;
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        Connection conn = connectDatabase(path);
         String selectQuery = "SELECT " + columnName1 +","+columnName2 + " FROM " + tableName;
         try {
             Statement stmt = conn.createStatement();
@@ -219,23 +176,12 @@ public class BaseForWiola {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
+            closeConnection(conn);
         }
     }
 
     public void clearTable(String path, String tableName) {
-        String url = "jdbc:sqlite:" + path;
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        Connection conn = connectDatabase(path);
         String deleteQuery = "DELETE FROM " + tableName;
         try {
             Statement stmt = conn.createStatement();
@@ -244,12 +190,7 @@ public class BaseForWiola {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
+            closeConnection(conn);
         }
     }
 
@@ -264,6 +205,26 @@ public class BaseForWiola {
             }
         } else {
             System.out.println("The database file does not exist.");
+        }
+    }
+
+    public Connection connectDatabase(String path){
+        String url = "jdbc:sqlite:" + path;
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return conn;
+    }
+
+    public void closeConnection(Connection conn){
+        try {
+            if (conn != null)
+                conn.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 }

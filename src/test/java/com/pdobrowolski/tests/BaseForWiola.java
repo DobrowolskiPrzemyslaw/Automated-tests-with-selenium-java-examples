@@ -21,10 +21,10 @@ public class BaseForWiola {
     @Test
     protected void createDataBase_test() {
 
-        String path = "C:/Users/User/Documents/wiola.db";
-        String tableName = "TABELA_EKRAN_DANYCH";
-        String columnName = "kolumna_1";
-        String value = "Ekran danych";
+        String path = "C:/Users/User/Documents/WIOLA.db";
+        String tableName = "TABELA_DATA_SCREEN";
+        String columnName = "column_1";
+        String value = "Data screen";
         if (!czyIstniejPlikBazyDanych(path)) {
             stworzPlikBazyDanych(path);
             createTableWithColumn(path, tableName, columnName);
@@ -32,6 +32,26 @@ public class BaseForWiola {
         clearTable(path, tableName);
         setValueToColumn(path, tableName, columnName, value);
         getValueFromColumn(path, tableName, columnName);
+
+        deleteSQLiteDatabase(path);
+    }
+
+    @Test
+    protected void createDataBase_test2() {
+
+        String path = "C:/Users/User/Documents/WIOLA2.db";
+        String tableName = "TABELA_DATA_SCREEN";
+        String columnName1 = "column_1";
+        String columnName2 = "column_2";
+        String value1 = "Data screen - value1";
+        String value2 = "Data screen - value2";
+        if (!czyIstniejPlikBazyDanych(path)) {
+            stworzPlikBazyDanych(path);
+            createTableWithColumns(path, tableName, columnName1, columnName2);
+        }
+        clearTable(path, tableName);
+        setValueToColumns(path, tableName, columnName1, columnName2, value1, value2);
+        getValueFromColumns(path, tableName, columnName1, columnName2);
 
         deleteSQLiteDatabase(path);
     }
@@ -78,6 +98,25 @@ public class BaseForWiola {
         }
     }
 
+    public static void createTableWithColumns(String path, String tableName, String columnName1, String columnName2) {
+        String url = "jdbc:sqlite:" + path;
+        try {
+            Connection connection = DriverManager.getConnection(url);
+            Statement statement = connection.createStatement();
+            String createTableQuery = "CREATE TABLE IF NOT EXISTS " + tableName + " ("
+                    + columnName1 + " TEXT,"
+                    + columnName2 + " TEXT"
+                    + ")";
+            statement.executeUpdate(createTableQuery);
+            statement.close();
+            connection.close();
+            System.out.println("Table created in the SQLite database.");
+        } catch (SQLException e) {
+            System.out.println("Error creating table in the SQLite database.");
+            e.printStackTrace();
+        }
+    }
+
     public void setValueToColumn(String path, String tableName, String columnName, String value1) {
         String url = "jdbc:sqlite:" + path;
         Connection conn = null;
@@ -90,6 +129,33 @@ public class BaseForWiola {
         try {
             PreparedStatement pstmt = conn.prepareStatement(insertQuery);
             pstmt.setString(1, value1);
+            pstmt.executeUpdate();
+            System.out.println("The values have been added to the table.");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+    }
+
+    public void setValueToColumns(String path, String tableName, String columnName1, String columnName2, String value1, String value2) {
+        String url = "jdbc:sqlite:" + path;
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        String insertQuery = "INSERT INTO "+tableName+" ("+ columnName1 +","+ columnName2+") VALUES (?,?)";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(insertQuery);
+            pstmt.setString(1, value1);
+            pstmt.setString(2, value2);
             pstmt.executeUpdate();
             System.out.println("The values have been added to the table.");
         } catch (SQLException e) {
@@ -132,6 +198,35 @@ public class BaseForWiola {
         }
     }
 
+    public void getValueFromColumns(String path, String tableName, String columnName1, String columnName2) {
+        String url = "jdbc:sqlite:" + path;
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        String selectQuery = "SELECT " + columnName1 +","+columnName2 + " FROM " + tableName;
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(selectQuery);
+            while (rs.next()) {
+                String value1 = rs.getString(columnName1);
+                String value2 = rs.getString(columnName2);
+                System.out.println("Displayed value from "+columnName1+": " + value1);
+                System.out.println("Displayed value from "+columnName2+": " + value2);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+    }
 
     public void clearTable(String path, String tableName) {
         String url = "jdbc:sqlite:" + path;

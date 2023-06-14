@@ -32,6 +32,8 @@ public class BaseForWiola {
         clearTable(path, tableName);
         setValueToColumn(path, tableName, columnName, value);
         getValueFromColumn(path, tableName, columnName);
+
+        deleteSQLiteDatabase(path);
     }
 
     private void stworzPlikBazyDanych(String path) {
@@ -48,8 +50,8 @@ public class BaseForWiola {
 
     public boolean czyIstniejPlikBazyDanych(String path) {
         boolean checkSQLiteFile = false;
-        File plik = new File(path);
-        if (plik.exists()) {
+        File file = new File(path);
+        if (file.exists()) {
             checkSQLiteFile = true;
             System.out.println("The database file exists.");
         } else {
@@ -64,7 +66,7 @@ public class BaseForWiola {
             Connection connection = DriverManager.getConnection(url);
             Statement statement = connection.createStatement();
             String createTableQuery = "CREATE TABLE IF NOT EXISTS " + tableName + " ("
-                    + columnName + " TEXT,"
+                    + columnName + " TEXT"
                     + ")";
             statement.executeUpdate(createTableQuery);
             statement.close();
@@ -153,6 +155,20 @@ public class BaseForWiola {
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
             }
+        }
+    }
+
+    public void deleteSQLiteDatabase(String path) {
+        File databaseFile = new File(path);
+        if (databaseFile.exists()) {
+            boolean deleted = databaseFile.delete();
+            if (deleted) {
+                System.out.println("The database has been successfully deleted.");
+            } else {
+                System.out.println("Failed to delete the database.");
+            }
+        } else {
+            System.out.println("The database file does not exist.");
         }
     }
 }
